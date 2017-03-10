@@ -1,0 +1,23 @@
+.container {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.cardstyle {
+	border: solid 5px black;
+	background: tomato;
+	margin: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.portraits {
+	width: 200px;
+	height: 200px;
+}
+
+p {
+	width: 150px;
+}
