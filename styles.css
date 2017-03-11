@@ -1,3 +1,8 @@
+input {
+	border: solid 5px black;
+	height: 2em;
+}
+
 .container {
 	display: inline-flex;
 	flex-wrap: wrap;
@@ -6,11 +11,18 @@
 
 .cardstyle {
 	border: solid 5px black;
-	background: tomato;
 	margin: 5px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+.cardstyle:nth-child(2n+1) {
+	background: aqua;
+}
+
+.cardstyle:nth-child(2n+2) {
+	background: gold;
 }
 
 .portraits {
@@ -20,4 +32,8 @@
 
 p {
 	width: 150px;
+}
+
+.dottedBorder {
+	border: dotted 5px green;
 }

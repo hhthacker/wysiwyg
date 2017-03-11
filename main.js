@@ -64,21 +64,38 @@ var myPeople = [{
 //Loop for writing card content to DOM
 
 var peopleBox = document.getElementById("peopleContainer");
-
+var bioString;
 for (var i = 0; i < myPeople.length; i++) {
-  var bioString;
-    bioString += `<div class="cardstyle"><h1>${myPeople[i].title}</h1><br>`
-    bioString += `<h3>${myPeople[i].name}</h3><br>`
-    bioString += `<p>${myPeople[i].bio}</p><br>`
-    bioString += `<img class="portraits" src="${myPeople[i].image}"><br>`
-    bioString += `<h6>Lived from ${myPeople[i].lifespan.birth} <br> to ${myPeople[i].lifespan.death}</h6>`
+    bioString += `<div class="cardstyle"><header><h1>${myPeople[i].title}</h1><br>`
+    bioString += `<h3>${myPeople[i].name}</h3></header><br>`
+    bioString += `<section><p class="editable">${myPeople[i].bio}</p><br>`
+    bioString += `<img class="portraits" src="${myPeople[i].image}"></section><br>`
+    bioString += `<footer><h6>Lived from ${myPeople[i].lifespan.birth} <br> to ${myPeople[i].lifespan.death}</h6></footer>`
     bioString += `</div>`
 };
    peopleBox.innerHTML = bioString;
 
+//logic for text box
 
-console.log("my peope", myPeople);
+var editBox = document.getElementById("inputbox");
 
+peopleBox.addEventListener("click", function(event) {
+  console.log(event);
+  if (event.target.classList.value === "editable") {
+    editBox.focus();
+    event.target.parentNode.parentNode.classList.add("dottedBorder");
+    editBox.addEventListener("keyup", function(){
+      var selectedBio = event.target
+      selectedBio.innerHTML = editBox.value;
+      editBox.onkeydown = function (){
+        if (window.event.keyCode === 13) {
+          // selectedBio =?????? entered value to keep 
+          editBox.value = "";
+        };
+      };
+    });
+  };
+});
 
 
 
