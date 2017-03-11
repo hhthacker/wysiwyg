@@ -64,13 +64,13 @@ var myPeople = [{
 //Loop for writing card content to DOM
 
 var peopleBox = document.getElementById("peopleContainer");
-var bioString;
+var bioString = "";
 for (var i = 0; i < myPeople.length; i++) {
-    bioString += `<div class="cardstyle"><header><h1>${myPeople[i].title}</h1><br>`
-    bioString += `<h3>${myPeople[i].name}</h3></header><br>`
-    bioString += `<section><p class="editable">${myPeople[i].bio}</p><br>`
-    bioString += `<img class="portraits" src="${myPeople[i].image}"></section><br>`
-    bioString += `<footer><h6>Lived from ${myPeople[i].lifespan.birth} <br> to ${myPeople[i].lifespan.death}</h6></footer>`
+    bioString += `<div class="cardstyle editable"><header class="child"><h1 class="grandchild">${myPeople[i].title}</h1><br>`
+    bioString += `<h3 class="grandchild">${myPeople[i].name}</h3></header><br>`
+    bioString += `<section class="child"><p class="grandchild">${myPeople[i].bio}</p><br>`
+    bioString += `<img class="portraits grandchild" src="${myPeople[i].image}"></section><br>`
+    bioString += `<footer class="child"><h6 class="grandchild">Lived from ${myPeople[i].lifespan.birth} <br> to ${myPeople[i].lifespan.death}</h6></footer>`
     bioString += `</div>`
 };
    peopleBox.innerHTML = bioString;
@@ -78,23 +78,37 @@ for (var i = 0; i < myPeople.length; i++) {
 //logic for text box
 
 var editBox = document.getElementById("inputbox");
+var selectedBio;
 
 peopleBox.addEventListener("click", function(event) {
-  console.log(event);
-  if (event.target.classList.value === "editable") {
+  var peopleClasses = document.getElementsByClassName("cardstyle");
+  for (var x = 0; x < myPeople.length; x++) {
+    peopleClasses[x].classList.remove("dottedBorder");
+  };
+  if (event.target.classList.contains("editable")) {
     editBox.focus();
-    event.target.parentNode.parentNode.classList.add("dottedBorder");
+    console.log("event", event);
+    selectedBio = event.target.childNodes[2].childNodes[0];
+    event.target.classList.add("dottedBorder"); }
+    else if (event.target.classList.contains("grandchild")) {
+      editBox.focus();
+      selectedBio = event.target.parentNode.parentNode.childNodes[2].childNodes[0];
+      event.target.parentNode.parentNode.classList.add("dottedBorder");
+    } else if (event.target.classList.contains("child")) {
+      editBox.focus();
+      selectedBio = event.target.parentNode.childNodes[2].childNodes[0];
+      event.target.parentNode.classList.add("dottedBorder");
+    };
+    editBox.value = selectedBio.innerHTML;
     editBox.addEventListener("keyup", function(){
-      var selectedBio = event.target
-      selectedBio.innerHTML = editBox.value;
       editBox.onkeydown = function (){
         if (window.event.keyCode === 13) {
-          // selectedBio =?????? entered value to keep 
           editBox.value = "";
+        } else {
+          selectedBio.innerHTML = editBox.value;
         };
       };
     });
-  };
 });
 
 
